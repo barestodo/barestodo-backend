@@ -46,4 +46,20 @@ public class PlaceController extends Controller {
        }
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result delete(String id){
+        try{
+            Place place=Place.findById(Long.valueOf(id));
+            if(place==null){
+                return notFound("no place with id "+id+" found");
+            }
+            place.delete();
+            return ok();
+        }catch(NumberFormatException e){
+            return badRequest("Id must be a long");
+        }catch(Exception e){
+            return internalServerError(e.getMessage());
+        }
+    }
+
 }

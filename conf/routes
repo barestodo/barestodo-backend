@@ -10,4 +10,5 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # Services REST
 GET /rest/place                     barestodo.backend.controllers.PlaceController.retrievePlaces()
 GET /rest/place/:id                 barestodo.backend.controllers.PlaceController.get(id:String)
+DELETE /rest/place/:id                 barestodo.backend.controllers.PlaceController.delete(id:String)
 PUT /rest/place/:name/:location     barestodo.backend.controllers.PlaceController.create(name:String,location:String)
