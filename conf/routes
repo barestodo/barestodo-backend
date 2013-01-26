@@ -9,3 +9,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Services REST
 GET /rest/place                     barestodo.backend.controllers.PlaceController.retrievePlaces()
+PUT /rest/place/:name/:location     barestodo.backend.controllers.PlaceController.create(name:String,location:String)

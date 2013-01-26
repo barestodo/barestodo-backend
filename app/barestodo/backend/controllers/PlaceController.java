@@ -24,7 +24,10 @@ public class PlaceController extends Controller {
       return ok(result);
   }
 
-    public static void create(Place place){
-
-    }
+  @BodyParser.Of(BodyParser.Json.class)
+  public static Result create(String name,String location){
+      Place newPlace=new Place(name,location);
+      newPlace.save();
+      return  ok();
+  }
 }

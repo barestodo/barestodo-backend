@@ -4,24 +4,20 @@
 # --- !Ups
 
 create table place (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   location                  varchar(255),
   constraint pk_place primary key (id))
 ;
-
-create sequence place_seq;
 
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists place;
+drop table place;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists place_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
