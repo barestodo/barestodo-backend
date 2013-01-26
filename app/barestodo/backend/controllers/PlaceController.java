@@ -17,7 +17,6 @@ public class PlaceController extends Controller {
       ObjectNode result = play.libs.Json.newObject();
       List<Place> places = Place.all();
       ArrayNode actionsNode = result.putArray("places");
-
       for(Place place:places){
           actionsNode.add(place.toJson());
       }
@@ -28,6 +27,12 @@ public class PlaceController extends Controller {
   public static Result create(String name,String location){
       Place newPlace=new Place(name,location);
       newPlace.save();
-      return  ok();
+
+      ObjectNode result = play.libs.Json.newObject();
+      result.putAll(newPlace.toJson());
+
+      return  ok(result);
   }
+
+
 }
