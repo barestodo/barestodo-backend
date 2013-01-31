@@ -1,6 +1,7 @@
 package models;
 
 import org.codehaus.jackson.node.ObjectNode;
+import org.joda.time.DateTime;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -23,11 +24,16 @@ public class Place extends Model {
 
     private String name;
     private String location;
+    private DateTime eventTime;
 
     public Place(String name,String location){
         super();
         this.name=name;
         this.location=location;
+    }
+
+    public void setEventTime(DateTime eventTime){
+         this.eventTime=eventTime;
     }
 
     /** persistance statique **/
@@ -59,6 +65,9 @@ public class Place extends Model {
         choice.put("id", id);
         choice.put("name", name);
         choice.put("location", location);
+        if(eventTime!=null){
+            choice.put("eventTime", eventTime.toString("yyyy-MM-dd"));
+        }
         return choice;
      }
 }
