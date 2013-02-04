@@ -1,7 +1,6 @@
 package models;
 
 import org.codehaus.jackson.node.ObjectNode;
-import org.joda.time.DateTime;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 
 @Entity
-public class TodoList extends Model {
+public class PlaceList extends Model {
 
     @Id
     private long id;
@@ -29,20 +28,20 @@ public class TodoList extends Model {
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Place> placesTodo;
 
-    public TodoList(String name){
+    public PlaceList(String name){
         super();
         this.name=name;
     }
 
     /** persistance statique **/
-    private static Finder<Long, TodoList> find = new Finder<Long, TodoList>(Long.class,
-            TodoList.class);
+    private static Finder<Long, PlaceList> find = new Finder<Long, PlaceList>(Long.class,
+            PlaceList.class);
 
-    public static void create(TodoList place) {
+    public static void create(PlaceList place) {
         place.save();
     }
 
-    public static TodoList findById(Long id) {
+    public static PlaceList findById(Long id) {
         return find.byId(id);
     }
 
@@ -50,7 +49,7 @@ public class TodoList extends Model {
         return find.findRowCount();
     }
 
-    public static List<TodoList> all() {
+    public static List<PlaceList> all() {
         return find.all();
     }
 

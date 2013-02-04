@@ -8,8 +8,12 @@ GET     /                           controllers.Application.index()
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Services REST
+#concern places
 GET /rest/place                             barestodo.backend.controllers.PlaceController.retrievePlaces()
 GET /rest/place/:id                         barestodo.backend.controllers.PlaceController.get(id:Long)
 DELETE /rest/place/:id                      barestodo.backend.controllers.PlaceController.delete(id:Long)
 PUT /rest/place/:name/:location             barestodo.backend.controllers.PlaceController.create(name:String,location:String)
 POST /rest/place/:id/plan/:eventTime        barestodo.backend.controllers.PlaceController.setEventTime(id:Long,eventTime:String)
+
+#concern lists
+GET /rest/circle                            barestodo.backend.controllers.PlaceListController.retrievePlaceLists()
