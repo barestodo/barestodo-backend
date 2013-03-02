@@ -17,3 +17,6 @@ POST /rest/place/:id/plan/:eventTime        barestodo.backend.controllers.PlaceC
 
 #concern lists
 GET /rest/circle                            barestodo.backend.controllers.PlaceListController.retrievePlaceLists()
+
+GET /rest/user/pseudo                       barestodo.backend.controllers.SecurityController.retrievePseudo()
+PUT /rest/user/:pseudo                      barestodo.backend.controllers.SecurityController.register(pseudo:String)
