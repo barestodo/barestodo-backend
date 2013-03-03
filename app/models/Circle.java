@@ -71,4 +71,12 @@ public class Circle extends Model {
     public List<User> getMembers() {
         return members;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void addMember(User currentUser) {
+        members.add(currentUser);
+    }
 }

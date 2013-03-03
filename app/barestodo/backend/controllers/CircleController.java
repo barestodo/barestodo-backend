@@ -5,20 +5,27 @@ import models.Circle;
 import models.User;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Content;
 import play.mvc.Result;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: hp008
- * Date: 02/02/13
- * Time: 18:10
- * To change this template use File | Settings | File Templates.
- */
 public class CircleController extends AbstractSecuredController {
+
+
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result create(String name) {
+        User currentUser=retrieveUser();
+        Circle newCircle=new Circle(name);
+        newCircle.addMember(currentUser);
+        newCircle.save();
+        ObjectNode result = play.libs.Json.newObject();
+        result.putAll(newCircle.toJson());
+        return ok(result);
+    }
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result retrieveCircles() {
@@ -34,8 +41,10 @@ public class CircleController extends AbstractSecuredController {
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result retrieveCircleMembers(long circleId) {
+    public static Result retrieveCircleMembers(Long circleId) {
         try{
+            Logger.info("try to retrieve members for circle "+circleId);
+
             User currentUser=retrieveUser();
             List<User> members = Circle.findById(circleId).getMembers();
             if(!members.contains(currentUser)){
@@ -43,8 +52,10 @@ public class CircleController extends AbstractSecuredController {
             }
             return ok(getMembersJsonNodes(members));
         }catch(InvalidHeaderException e){
+            Logger.error(e.getMessage(),e);
             return forbidden(e.getMessage());
         }catch(IllegalArgumentException e){
+            Logger.error(e.getMessage(),e);
             return forbidden(e.getMessage());
         }
     }

@@ -16,9 +16,10 @@ POST /rest/place/:id/plan/:eventTime                barestodo.backend.controller
 
 #concern circles
 GET /rest/circle                                    barestodo.backend.controllers.CircleController.retrieveCircles()
-GET /rest/circle/:circleId/places                   barestodo.backend.controllers.PlaceController.retrievePlacesByCircle(circleId:Long)
 GET /rest/circle/:circleId/members                  barestodo.backend.controllers.CircleController.retrieveCircleMembers(circleId:Long)
+GET /rest/circle/:circleId/places                   barestodo.backend.controllers.PlaceController.retrievePlacesByCircle(circleId:Long)
 PUT /rest/circle/:circleId/place/:name/:location    barestodo.backend.controllers.PlaceController.create(circleId:Long,name:String,location:String)
+PUT /rest/circle/:name                              barestodo.backend.controllers.CircleController.create(name:String)
 
 #concern identification
 GET /rest/user/pseudo                               barestodo.backend.controllers.SecurityController.retrievePseudo()

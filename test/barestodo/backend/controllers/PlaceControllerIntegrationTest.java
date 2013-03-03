@@ -1,5 +1,6 @@
 package barestodo.backend.controllers;
 
+import models.Circle;
 import models.Place;
 import org.codehaus.jackson.JsonNode;
 import org.junit.BeforeClass;
@@ -19,8 +20,12 @@ import static play.test.Helpers.*;
 public class PlaceControllerIntegrationTest {
 
 
+    private static Circle parent;
+
     @BeforeClass
     public static void init(){
+        parent = new Circle("bars");
+        parent.save();
         new Place(parent, "Troll","rue de cote").save();
         new Place(parent, "24","Saint lazare");
         new Place(parent, "l'arcade","Saint lazare");
@@ -29,7 +34,7 @@ public class PlaceControllerIntegrationTest {
 
     @Test
     public void place_controller_return_json_in_utf8(){
-        play.mvc.Result actions = callAction(barestodo.backend.controllers.routes.ref.PlaceController.retrievePlaces());
+        play.mvc.Result actions = callAction(barestodo.backend.controllers.routes.ref.PlaceController.retrievePlacesByCircle(parent.getId()));
         assertThat(status(actions)).isEqualTo(OK);
 
         assertThat(contentType(actions)).isEqualTo("application/json");
@@ -38,7 +43,7 @@ public class PlaceControllerIntegrationTest {
 
     @Test
     public void place_controller_return_some_objects(){
-        play.mvc.Result actions = callAction(barestodo.backend.controllers.routes.ref.PlaceController.retrievePlaces());
+        play.mvc.Result actions = callAction(barestodo.backend.controllers.routes.ref.PlaceController.retrievePlacesByCircle(parent.getId()));
         assertThat(status(actions)).isEqualTo(OK);
         String actionsString=contentAsString(actions);
         JsonNode json=Json.parse(actionsString);
