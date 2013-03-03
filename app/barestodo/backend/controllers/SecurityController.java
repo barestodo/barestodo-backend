@@ -1,51 +1,45 @@
 package barestodo.backend.controllers;
 
 
+import barestodo.backend.exception.InvalidHeaderException;
 import com.google.common.base.Strings;
-import models.Place;
 import models.User;
-import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
-import org.joda.time.DateTime;
-import play.api.libs.oauth.OAuth;
-import play.api.libs.openid.OpenID;
-import play.data.format.Formats;
 import play.mvc.BodyParser;
-import play.mvc.Controller;
 import play.mvc.Result;
 
-import java.util.Date;
-import java.util.List;
+public class SecurityController extends AbstractSecuredController {
 
-public class SecurityController extends Controller {
-
-    public static final String IDENT_KEY = "ident";
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result retrievePseudo() {
-      ObjectNode result = play.libs.Json.newObject();
-      User currentUser=User.findByEmail(request().getHeader(IDENT_KEY));
+        try {
+            User currentUser = retrieveUser();
 
-      if(currentUser==null){
-          return notFound("user not found");
-      }
-      result.put("pseudo",currentUser.getPseudo());
-      return ok(result);
+            ObjectNode result = play.libs.Json.newObject();
+            result.put("pseudo", currentUser.getPseudo());
+            return ok(result);
+        } catch (InvalidHeaderException e) {
+            return badRequest("unknow user");
+        }
     }
 
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result register(String pseudo) {
-      String emailAdress = request().getHeader(IDENT_KEY);
-      if(Strings.isNullOrEmpty(emailAdress)){
-         return badRequest("empty header");
-      }
-      User currentUser=User.findByEmail(emailAdress);
-      if(currentUser!=null){
-          return unauthorized("user not found");
-      }
-      User newUser= new User(pseudo, emailAdress);
-      newUser.save();
-      return ok();
+        try {
+            String emailAdress = retrieveToken();
+            User currentUser = User.findByEmail(emailAdress);
+            if (currentUser != null) {
+                return forbidden("user already exist");
+            }
+            User newUser = new User(pseudo, emailAdress);
+            newUser.save();
+            return ok();
+        } catch (InvalidHeaderException e) {
+            return badRequest(e.getMessage());
+        }
     }
+
+
 }

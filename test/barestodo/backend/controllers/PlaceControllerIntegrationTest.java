@@ -21,10 +21,10 @@ public class PlaceControllerIntegrationTest {
 
     @BeforeClass
     public static void init(){
-        new Place("Troll","rue de cote").save();
-        new Place("24","Saint lazare");
-        new Place("l'arcade","Saint lazare");
-        new Place("toutalégou","rue de la pente rude");
+        new Place(parent, "Troll","rue de cote").save();
+        new Place(parent, "24","Saint lazare");
+        new Place(parent, "l'arcade","Saint lazare");
+        new Place(parent, "toutalégou","rue de la pente rude");
     }
 
     @Test

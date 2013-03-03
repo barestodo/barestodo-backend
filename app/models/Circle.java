@@ -15,33 +15,33 @@ import java.util.List;
  */
 
 @Entity
-public class PlaceList extends Model {
+public class Circle extends Model {
 
     @Id
     private long id;
 
     private String name;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> members;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Place> placesTodo;
 
-    public PlaceList(String name){
+    public Circle(String name){
         super();
         this.name=name;
     }
 
     /** persistance statique **/
-    private static Finder<Long, PlaceList> find = new Finder<Long, PlaceList>(Long.class,
-            PlaceList.class);
+    private static Finder<Long, Circle> find = new Finder<Long, Circle>(Long.class,
+            Circle.class);
 
-    public static void create(PlaceList place) {
+    public static void create(Circle place) {
         place.save();
     }
 
-    public static PlaceList findById(Long id) {
+    public static Circle findById(Long id) {
         return find.byId(id);
     }
 
@@ -49,8 +49,12 @@ public class PlaceList extends Model {
         return find.findRowCount();
     }
 
-    public static List<PlaceList> all() {
+    public static List<Circle> all() {
         return find.all();
+    }
+
+    public static List<Circle> all(Long userId) {
+        return find.where().eq("members.id",userId).findList();
     }
 
     public static void delete(Long id) {
@@ -63,4 +67,8 @@ public class PlaceList extends Model {
         choice.put("name", name);
         return choice;
      }
+
+    public List<User> getMembers() {
+        return members;
+    }
 }

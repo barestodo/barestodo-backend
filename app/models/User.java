@@ -22,6 +22,11 @@ public class User extends Model {
     private String pseudo;
     private String email;
 
+
+    public long getId() {
+        return id;
+    }
+
     public String getEmail(){
         return email;
     }
@@ -37,13 +42,10 @@ public class User extends Model {
 
     public ObjectNode toJson() {
         ObjectNode choice = play.libs.Json.newObject();
-        choice.put("id", id);
         choice.put("pseudo", pseudo);
         choice.put("email", email);
         return choice;
     }
-
-
 
     private static Finder<Long, User> find = new Finder<Long, User>(Long.class,
             User.class);
@@ -71,4 +73,5 @@ public class User extends Model {
     public static void delete(Long id) {
         find.ref(id).delete();
     }
+
 }
