@@ -76,7 +76,11 @@ public class Circle extends Model {
         return id;
     }
 
-    public void addMember(User currentUser) {
-        members.add(currentUser);
+    public void addMember(User member) {
+        members.add(member);
+    }
+
+    public void removeMember(User member) {
+        members.remove(member);
     }
 }

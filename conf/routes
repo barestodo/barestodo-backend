@@ -20,6 +20,7 @@ GET /rest/circle/:circleId/members                  barestodo.backend.controller
 GET /rest/circle/:circleId/places                   barestodo.backend.controllers.PlaceController.retrievePlacesByCircle(circleId:Long)
 PUT /rest/circle/:circleId/place/:name/:location    barestodo.backend.controllers.PlaceController.create(circleId:Long,name:String,location:String)
 PUT /rest/circle/:name                              barestodo.backend.controllers.CircleController.create(name:String)
+POST /rest/circle/:circleId/leave                   barestodo.backend.controllers.CircleController.leave(circleId:Long)
 
 #concern identification
 GET /rest/user/pseudo                               barestodo.backend.controllers.SecurityController.retrievePseudo()

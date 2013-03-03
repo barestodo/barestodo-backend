@@ -17,6 +17,18 @@ public class CircleController extends AbstractSecuredController {
 
 
     @BodyParser.Of(BodyParser.Json.class)
+    public static Result leave(Long circleId) {
+        User currentUser=retrieveUser();
+        Circle newCircle=Circle.findById(circleId);
+        newCircle.removeMember(currentUser);
+        newCircle.save();
+        ObjectNode result = play.libs.Json.newObject();
+        result.putAll(newCircle.toJson());
+        return ok(result);
+    }
+
+
+    @BodyParser.Of(BodyParser.Json.class)
     public static Result create(String name) {
         User currentUser=retrieveUser();
         Circle newCircle=new Circle(name);
