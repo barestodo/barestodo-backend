@@ -85,6 +85,6 @@ public class Place extends Model {
     }
 
     public static List<Place> ofCircle(Long circleId) {
-        return find.where().eq("parent.id",circleId).findList();
+        return find.where().eq("parent.id",circleId).orderBy("event_time desc").findList();
     }
 }

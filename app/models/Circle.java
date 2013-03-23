@@ -6,13 +6,6 @@ import play.db.ebean.Model;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: hp008
- * Date: 26/01/13
- * Time: 17:34
- * To change this template use File | Settings | File Templates.
- */
 
 @Entity
 public class Circle extends Model {
