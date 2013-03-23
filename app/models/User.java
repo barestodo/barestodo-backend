@@ -1,5 +1,6 @@
 package models;
 
+import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.db.ebean.Model;
 
@@ -78,4 +79,13 @@ public class User extends Model {
         find.ref(id).delete();
     }
 
+
+    public static ObjectNode getMembersJsonNodes(List<User> members) {
+        ObjectNode result = play.libs.Json.newObject();
+        ArrayNode actionsNode = result.putArray("members");
+        for(User user: members){
+            actionsNode.add(user.toJson());
+        }
+        return result;
+    }
 }

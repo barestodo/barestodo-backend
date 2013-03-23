@@ -26,3 +26,4 @@ POST /rest/circle/:circleId/invite/:email           barestodo.backend.controller
 #concern identification
 GET /rest/user/pseudo                               barestodo.backend.controllers.SecurityController.retrievePseudo()
 PUT /rest/user/:pseudo                              barestodo.backend.controllers.SecurityController.register(pseudo:String)
+GET /rest/user                                      barestodo.backend.controllers.SecurityController.availableUsersToInvite()

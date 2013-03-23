@@ -8,6 +8,8 @@ import org.codehaus.jackson.node.ObjectNode;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 
+import static models.User.getMembersJsonNodes;
+
 public class SecurityController extends AbstractSecuredController {
 
 
@@ -39,6 +41,12 @@ public class SecurityController extends AbstractSecuredController {
             return badRequest(e.getMessage());
         }
     }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result availableUsersToInvite() {
+        return ok(getMembersJsonNodes(User.all()));
+    }
+
 
 
 }

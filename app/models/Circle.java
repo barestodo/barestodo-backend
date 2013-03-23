@@ -42,6 +42,7 @@ public class Circle extends Model {
         choice.put("nbPlaces",countPlaces(id));
         return choice;
     }
+
     public List<User> getMembers() {
         return members;
     }

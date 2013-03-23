@@ -15,6 +15,8 @@ import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
+import static models.User.getMembersJsonNodes;
+
 public class CircleController extends AbstractSecuredController {
 
 
@@ -103,14 +105,7 @@ public class CircleController extends AbstractSecuredController {
         }
     }
 
-    private static ObjectNode getMembersJsonNodes(List<User> members) {
-        ObjectNode result = play.libs.Json.newObject();
-        ArrayNode actionsNode = result.putArray("members");
-        for(User user: members){
-            actionsNode.add(user.toJson());
-        }
-        return result;
-    }
+
 
 
     private static ObjectNode getCirclesJsonNodes(List<Circle> circles) {
