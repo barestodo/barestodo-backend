@@ -118,7 +118,7 @@ public class CircleController extends AbstractSecuredController {
         ObjectNode result = play.libs.Json.newObject();
         ArrayNode actionsNode = result.putArray("Circles");
         for(Circle list: circles){
-            actionsNode.add(list.toJson());
+            actionsNode.add(list.toJsonRef());
         }
         return result;
     }
