@@ -103,6 +103,9 @@ public class PlaceController extends AbstractSecuredController {
             if(place==null){
                 return notFound("no place with id "+id+" found");
             }
+            if(place.isAlreadyScheluded()){
+                return status(CONFLICT,"event already scheduled");
+            }
             place.setEventTime(DateTime.parse(eventTime));
             place.save();
             return ok();

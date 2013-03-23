@@ -43,6 +43,9 @@ public class Place extends Model {
          this.eventTime=eventTime;
     }
 
+    public Boolean isAlreadyScheluded(){
+        return eventTime!=null;
+    }
 
 
     public ObjectNode toJson() {
