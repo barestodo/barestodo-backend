@@ -9,7 +9,10 @@ import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Content;
 import play.mvc.Result;
+import play.mvc.Results;
 
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 public class CircleController extends AbstractSecuredController {
@@ -25,6 +28,34 @@ public class CircleController extends AbstractSecuredController {
         ObjectNode result = play.libs.Json.newObject();
         result.putAll(newCircle.toJson());
         return ok(result);
+    }
+
+    public static Result addPerson(Long circleId,String email){
+        User userToInvite;
+        userToInvite = retireveUserByEmailOrCreateThem(email);
+        return trytoAddMemberOnCircle(circleId, userToInvite);
+    }
+
+    private static User retireveUserByEmailOrCreateThem(String email) {
+        User userToInvite;
+        try{
+           userToInvite =retrieveUser(email);
+        }catch(IllegalArgumentException e){
+            userToInvite=new User(email);
+            userToInvite.save();
+        }
+        return userToInvite;
+    }
+
+    private static Result trytoAddMemberOnCircle(Long circleId, User userToInvite) {
+        Circle circleToAddUser=Circle.findById(circleId);
+        circleToAddUser.addMember(userToInvite);
+        try{
+            circleToAddUser.save();
+            return ok();
+        }catch(PersistenceException e){
+          return status(CONFLICT,"user already on this circle");
+        }
     }
 
 

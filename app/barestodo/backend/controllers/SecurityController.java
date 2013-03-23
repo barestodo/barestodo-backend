@@ -11,14 +11,13 @@ import play.mvc.Result;
 public class SecurityController extends AbstractSecuredController {
 
 
-    @BodyParser.Of(BodyParser.Json.class)
+    @BodyParser.Of(BodyParser.Text.class)
     public static Result retrievePseudo() {
         try {
             User currentUser = retrieveUser();
-
-            ObjectNode result = play.libs.Json.newObject();
-            result.put("pseudo", currentUser.getPseudo());
-            return ok(result);
+            return ok(currentUser.getPseudo());
+        } catch (IllegalArgumentException e) {
+            return notFound("unknow user");
         } catch (InvalidHeaderException e) {
             return badRequest("unknow user");
         }

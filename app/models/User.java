@@ -31,6 +31,10 @@ public class User extends Model {
         return email;
     }
 
+    public User(String email){
+       this.email=email;
+    }
+
     public User(String pseudo,String email){
         this.pseudo=pseudo;
         this.email=email;

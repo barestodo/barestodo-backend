@@ -5,13 +5,7 @@ import com.google.common.base.Strings;
 import models.User;
 import play.mvc.Controller;
 
-/**
- * Created with IntelliJ IDEA.
- * User: hp008
- * Date: 02/03/13
- * Time: 13:14
- * To change this template use File | Settings | File Templates.
- */
+
 public class AbstractSecuredController extends Controller {
 
     public static final String IDENT_KEY = "ident";
@@ -19,11 +13,7 @@ public class AbstractSecuredController extends Controller {
 
     protected static User retrieveUser(){
         String emailAdress = retrieveToken();
-        User currentUser=User.findByEmail(emailAdress);
-        if(currentUser==null){
-            throw new IllegalArgumentException("user not found");
-        }
-         return currentUser;
+        return retrieveUser(emailAdress);
      }
 
     protected static String retrieveToken() {
@@ -34,5 +24,11 @@ public class AbstractSecuredController extends Controller {
         return emailAdress;
     }
 
-
+    protected static User retrieveUser(String email) {
+        User user=User.findByEmail(email);
+        if(user==null){
+            throw new IllegalArgumentException("user not found");
+        }
+        return user;
+    }
 }
