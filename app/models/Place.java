@@ -51,7 +51,7 @@ public class Place extends Model {
         choice.put("name", name);
         choice.put("location", location);
         if(eventTime!=null){
-            choice.put("eventTime", eventTime.toString("yyyy-MM-dd"));
+            choice.put("eventTime", eventTime.toString("yyyy-MM-dd hh:mm:ss"));
         }
         return choice;
     }

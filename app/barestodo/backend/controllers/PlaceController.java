@@ -111,7 +111,7 @@ public class PlaceController extends AbstractSecuredController {
         }catch(InvalidHeaderException e){
             return forbidden(e.getMessage());
         }catch(IllegalArgumentException e){
-            return forbidden(e.getMessage());
+            return badRequest("expected UTC format (ex:2013-03-28T19:00:00Z)");
         }catch(Exception e){
             return internalServerError(e.getMessage());
         }
